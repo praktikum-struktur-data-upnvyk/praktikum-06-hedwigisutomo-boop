@@ -91,10 +91,16 @@ bool enqueue(Queue& q, int nomor) {
 // SOAL 2 — dequeue()                                                  40 poin
 // =============================================================================
 bool dequeue(Queue& q, int& nomor) {
-     if (q.depan == nullptr) return false;
+    if (q.depan == nullptr) return false;
+
     Node* hapus = q.depan;
     nomor = hapus->data;
-    q.depan = q.depan->next;
+    q.depan = hapus->next;
+
+    if (q.depan == nullptr) {
+        q.belakang = nullptr;
+    }
+
     delete hapus;
     return true;
 }
