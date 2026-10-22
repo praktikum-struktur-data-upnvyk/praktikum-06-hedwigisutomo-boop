@@ -6,6 +6,7 @@
 #include "student.h"
 
 #include <iostream>
+#include <new>
 #include <sstream>
 
 using namespace std;
@@ -72,23 +73,39 @@ string display(const Queue& q) {
 // SOAL 1 — enqueue()                                                  35 poin
 // =============================================================================
 bool enqueue(Queue& q, int nomor) {
-    // TODO: kerjakan di sini
-    return false;
+    Node* baru = new (nothrow) Node{nomor, NULL};
+    if (baru == NULL) return false;
+
+    if (q.depan == NULL) {
+        q.depan = baru;
+    } else {
+        q.belakang->next = baru;
+    }
+
+    q.belakang = baru;
+    return true;     
 }
 
 // =============================================================================
 // SOAL 2 — dequeue()                                                  40 poin
 // =============================================================================
 bool dequeue(Queue& q, int& nomor) {
-    // TODO: kerjakan di sini
-    return false;
+     if (q.depan == NULL) return false;
+    Node* hapus = q.depan;
+    nomor = hapus->data;
+    q.depan = q.depan->next;
+    delete hapus;
+    return true;
 }
 
 // =============================================================================
 // SOAL 3 — clear()                                                    25 poin
 // =============================================================================
 void clear(Queue& q) {
-    // TODO: kerjakan di sini
+    while (q.depan != NULL) {
+        int nomor;
+        dequeue(q, nomor);
+    }
 }
 
 // =============================================================================
